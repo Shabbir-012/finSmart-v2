@@ -4,6 +4,10 @@ import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
+import CustomButton from "../../components/CustomButton";
+import { TouchableOpacity } from "react-native";
+import { router } from "expo-router";
+import { globalStyles } from "../styles/Styles";
 
 // Define validation schema using Zod
 const schema = z.object({
@@ -19,6 +23,7 @@ export default function SignUpForm() {
     control,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm({
     resolver: zodResolver(schema), // Integrates zod validation
   });
@@ -30,6 +35,11 @@ export default function SignUpForm() {
         "http://192.168.10.42:8001/api/v1/users/register", // Ensure this URL is reachable
         data
       );
+
+      if (response.status === 201) {
+        reset();
+      }
+
       console.log("Registration Successful:", response.data);
       // Handle success (e.g., navigate to another screen or show a success message)
     } catch (error) {
@@ -51,18 +61,18 @@ export default function SignUpForm() {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.heading}>Create Your Account</Text>
+    <View style={globalStyles.container}>
+      <Text style={globalStyles.heading}>Create Your Account</Text>
 
       {/* Name Field */}
       <Controller
         control={control}
         name="username"
         render={({ field: { onChange, onBlur, value } }) => (
-          <View style={styles.inputContainer}>
+          <View style={globalStyles.inputContainer}>
             <Text>User name</Text>
             <TextInput
-              style={styles.input}
+              style={globalStyles.input}
               placeholder="Enter your user name"
               onBlur={onBlur}
               onChangeText={onChange}
@@ -80,10 +90,10 @@ export default function SignUpForm() {
         control={control}
         name="email"
         render={({ field: { onChange, onBlur, value } }) => (
-          <View style={styles.inputContainer}>
+          <View style={globalStyles.inputContainer}>
             <Text>Email</Text>
             <TextInput
-              style={styles.input}
+              style={globalStyles.input}
               placeholder="Enter your email"
               onBlur={onBlur}
               onChangeText={onChange}
@@ -102,10 +112,10 @@ export default function SignUpForm() {
         control={control}
         name="password"
         render={({ field: { onChange, onBlur, value } }) => (
-          <View style={styles.inputContainer}>
+          <View style={globalStyles.inputContainer}>
             <Text>Password</Text>
             <TextInput
-              style={styles.input}
+              style={globalStyles.input}
               placeholder="Enter your password"
               onBlur={onBlur}
               onChangeText={onChange}
@@ -120,35 +130,35 @@ export default function SignUpForm() {
       />
 
       {/* Submit Button */}
-      <Button title="Sign Up" onPress={handleSubmit(onSubmit)} />
+      <CustomButton
+        title="Sign Up"
+        onPress={handleSubmit(onSubmit)}
+        style={styles.button}
+        textStyle={styles.textStyle}
+      />
+      <View>
+        <Text>Already have an account.</Text>
+        <TouchableOpacity onPress={() => router.push("/(auth)/sign-in")}>
+          <Text>Sign in</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 20,
-    backgroundColor: "#fff",
-    flex: 1,
-  },
-  heading: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 20,
-    marginTop: 50,
-  },
-  inputContainer: {
-    marginBottom: 15,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 8,
-    padding: 10,
-    marginTop: 5,
-  },
   error: {
     color: "red",
     marginTop: 5,
+  },
+  button: {
+    padding: 15,
+    alignSelf: "center",
+    borderRadius: 20,
+    width: 313,
+  },
+  textStyle: {
+    color: "#FFF",
+    textAlign: "center",
   },
 });
