@@ -136,10 +136,17 @@ export default function SignUpForm() {
         style={styles.button}
         textStyle={styles.textStyle}
       />
-      <View>
-        <Text>Already have an account.</Text>
+      <View
+        style={{
+          flexDirection: "row",
+          gap: 10,
+          marginTop: 10,
+          justifyContent: "center",
+        }}
+      >
+        <Text>Already have an account</Text>
         <TouchableOpacity onPress={() => router.push("/(auth)/sign-in")}>
-          <Text>Sign in</Text>
+          <Text style={{ color: "red" }}>Sign in</Text>
         </TouchableOpacity>
       </View>
     </View>

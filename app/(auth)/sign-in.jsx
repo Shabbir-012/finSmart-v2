@@ -5,8 +5,19 @@ import { Controller, useForm } from "react-hook-form";
 import { globalStyles } from "../styles/Styles";
 import CustomButton from "../../components/CustomButton";
 import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { router } from "expo-router";
 
 export default function SignIn() {
+  const storeTokens = async (accessToken, refreshToken) => {
+    try {
+      await AsyncStorage.setItem("accessToken", accessToken);
+      await AsyncStorage.setItem("refreshToken", refreshToken);
+    } catch (error) {
+      console.log("Error saving tokens:", error);
+    }
+  };
+
   const {
     control,
     handleSubmit,
@@ -21,9 +32,12 @@ export default function SignIn() {
         data
       );
       if (response.status === 200) {
-        reset();
-      }
+        const { accessToken, refreshToken } = response.data;
+        await storeTokens(accessToken, refreshToken);
 
+        reset();
+        // router.push("/(root)/(tabs)/home");
+      }
       console.log("Login Successful:", response.data);
     } catch (error) {
       if (error.response) {
@@ -66,7 +80,14 @@ export default function SignIn() {
         </View>
         <View>
           <Text style={{ marginTop: 30, fontSize: 15 }}>Welcome to</Text>
-          <Text style={{ fontSize: 25, fontStyle: "normal", fontWeight: 700 }}>
+          <Text
+            style={{
+              fontSize: 25,
+              fontStyle: "normal",
+              fontWeight: 700,
+              marginBottom: 10,
+            }}
+          >
             FinSmart App
           </Text>
         </View>
