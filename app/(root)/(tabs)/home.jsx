@@ -3,54 +3,48 @@ import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { TouchableOpacity } from "react-native";
 import { router } from "expo-router";
+import CreditCard from "../../../components/SvgIcon/CreditCard";
+import TopBar from "../../../components/TopBar/TopBar";
+import AirTicket from "../../../components/SvgIcon/AirTicket";
+import EkycForm from "../../../components/SvgIcon/EkycForm";
+import EmiCalculator from "../../../components/SvgIcon/EmiCalculator";
+import ServiceCard from "../../../components/Cards/ServiceCard";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Home() {
+
+
+  const checkLoginAndNavigate = async (page) => {
+    const accessToken =  await AsyncStorage.getItem("accessToken")
+
+    if(accessToken){
+      router.push(`/${page}`)
+    }
+    else{
+      router.push("/sign-in")
+    }
+  } 
+
   return (
-    <SafeAreaView style={{ marginTop: 20, marginLeft: 20, marginRight: 20 }}>
-      <View style={{ flexDirection: "row", alignItems: "center" }}>
-        <Image
-          source={require("../../../assets/images/logo.png")}
-          style={{ width: 25, height: 25 }}
-        />
-        <Text
-          style={{
-            fontSize: 20,
-            fontStyle: "normal",
-            fontWeight: 800,
-            color: "#6D6E72",
-          }}
-        >
-          FinSmart
-        </Text>
+    <SafeAreaView style={{ marginTop: 20 }}>
+      <TopBar />
 
-        <TouchableOpacity onPress={() => router.push("/(auth)/sign-in")}>
-          <Text
-            style={{
-              marginLeft: 180,
-              color: "red",
-              fontSize: 15,
-              fontWeight: "bold",
-            }}
-          >
-            Login
-          </Text>
-        </TouchableOpacity>
-      </View>
-
-      {/* <View style={{ backgroundColor: "#249E63" , height: 80, marginTop: 20 ,alignItems:"center"}}>
-        <Text style={{color:"#ffff", }}>Apply for Products</Text>
-      </View> */}
       <Text style={{ fontSize: 15, fontWeight: "400", marginTop: 10 }}>
         Services
       </Text>
-      <View style={{ flex: 1, flexDirection: "row" }}>
-        <View style={{ flexDirection: "column" }}>
-          <Image
-            style={{ maxHeight: 60, maxWidth: 60 }}
-            source={require("../../../assets/images/ekyc-3.png")}
-          />
-          <Text>E-Kyc</Text>
-        </View>
+
+      <View style={{ flexDirection: "row", marginTop: 10, gap: 5 , flexWrap: "wrap" , justifyContent: "space-between"}}>
+        
+        <ServiceCard IconComponent={CreditCard} title={"Credit Card"}  onPress={() => checkLoginAndNavigate("creditCard")}/>
+        <ServiceCard IconComponent={EmiCalculator} title={"Emi Calculator"} onPress={() => router.push("/emiCalculator")} />
+        <ServiceCard IconComponent={EkycForm} title={"Ekyc Form"} onPress={() => router.push("/ekycForm")}/>
+        <ServiceCard IconComponent={AirTicket} title={"Air Ticket"} onPress={() => router.push("/airTicket")}/>
+
+
+        <ServiceCard IconComponent={EmiCalculator} title={"Emi Calculator"} />
+        <ServiceCard IconComponent={EkycForm} title={"Ekyc Form"} />
+        <ServiceCard IconComponent={AirTicket} title={"Air Ticket"} />
+        <ServiceCard IconComponent={CreditCard} title={"Credit Card"} />
       </View>
     </SafeAreaView>
   );

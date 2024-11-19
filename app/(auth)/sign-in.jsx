@@ -3,16 +3,39 @@ import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Controller, useForm } from "react-hook-form";
 import { globalStyles } from "../styles/Styles";
-import CustomButton from "../../components/CustomButton";
+import CustomButton from "../../components/Button/CustomButton";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { router } from "expo-router";
+import { router, useRouter } from "expo-router";
 
 export default function SignIn() {
+  // const router = useRouter();
+  // const { redirectTo } = router.query;
+
   const storeTokens = async (accessToken, refreshToken) => {
+    // try {
+    //   await AsyncStorage.setItem("accessToken", accessToken);
+    //   await AsyncStorage.setItem("refreshToken", refreshToken);
+    // } catch (error) {
+    //   console.log("Error saving tokens:", error);
+    // }
+
+    //-------------------------
+
+    console.log("Tokens being stored:", accessToken, refreshToken); // Log the tokens here
+
+    //----------------------------------------------------------------
+
     try {
-      await AsyncStorage.setItem("accessToken", accessToken);
-      await AsyncStorage.setItem("refreshToken", refreshToken);
+      if (accessToken && refreshToken) {
+        
+        await AsyncStorage.setItem("accessToken", accessToken);
+        await AsyncStorage.setItem("refreshToken", refreshToken);
+      } else {
+        console.error(
+          "Invalid tokens. Access token or refresh token is missing."
+        );
+      }
     } catch (error) {
       console.log("Error saving tokens:", error);
     }
@@ -28,15 +51,22 @@ export default function SignIn() {
   const onPressSignIn = async (data) => {
     try {
       const response = await axios.post(
-        "http://192.168.10.42:8001/api/v1/users/login", // Ensure this URL is reachable
+        "http://192.168.10.42:8001/api/v1/users/login", 
         data
       );
+      // console.log(response);
       if (response.status === 200) {
-        const { accessToken, refreshToken } = response.data;
+        const { accessToken, refreshToken } = response.data.data;
+
+        //-------------------------------------------
+        console.log("Extracted tokens:", accessToken, refreshToken);
+        //-------------------------------------------------------------------------------------------------------
         await storeTokens(accessToken, refreshToken);
 
         reset();
-        // router.push("/(root)/(tabs)/home");
+        // router.push(`/${redirectTo || "home"}`);
+
+        router.push("/home");
       }
       console.log("Login Successful:", response.data);
     } catch (error) {

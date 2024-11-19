@@ -4,7 +4,7 @@ import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
-import CustomButton from "../../components/CustomButton";
+import CustomButton from "../../components/Button/CustomButton";
 import { TouchableOpacity } from "react-native";
 import { router } from "expo-router";
 import { globalStyles } from "../styles/Styles";
