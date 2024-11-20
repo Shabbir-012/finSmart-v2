@@ -6,6 +6,7 @@ import { router } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import API from "../../app/api/axiosInstance";
+import axios from "axios";
 
 const TopBar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -55,17 +56,27 @@ const TopBar = () => {
       const response = await API.post(
         
         "http://192.168.10.42:8001/api/v1/users/logout",
-        data, 
+        { refreshToken }, 
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
             // "Content-Type": "application/json", // pass the accessToken in the Authorization header
           },
         }
-
-       
-
       );
+
+      //--------------------------------------
+      // const response = await axios.post(
+      //   "http://192.168.10.42:8001/api/v1/users/logout",
+      //   { refreshToken }, // Only send the refresh token
+      //   {
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //     },
+      //   }
+      // );
+
+
       console.log("Logout response", response.data);
 
       // await AsyncStorage.multiRemove(["accessToken", "refreshToken"]);

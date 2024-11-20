@@ -11,24 +11,49 @@ import API from "../api/axiosInstance";
 
 export default function SignIn() {
 
-  const storeTokens = async (accessToken, refreshToken) => {
-    // console.log("Tokens being stored:", accessToken, refreshToken); // Log the tokens here
-    try {
-      if (accessToken && refreshToken) {
-        await AsyncStorage.setItem("accessToken", accessToken);
-        await AsyncStorage.setItem("refreshToken", refreshToken);
+  // const storeTokens = async (accessToken, refreshToken) => {
+  //   // console.log("Tokens being stored:", accessToken, refreshToken); // Log the tokens here
+  //   try {
+  //     if (accessToken && refreshToken) {
+  //       await AsyncStorage.setItem("accessToken", accessToken);
+  //       await AsyncStorage.setItem("refreshToken", refreshToken);
 
-        console.log("Token Successfully stored");
+  //       console.log("Token Successfully stored");
         
-      } else {
-        console.error(
-          "Invalid tokens. Access token or refresh token is missing."
-        );
-      }
-    } catch (error) {
-      console.log("Error saving tokens:", error);
+  //     } else {
+  //       console.error(
+  //         "Invalid tokens. Access token or refresh token is missing."
+  //       );
+  //     }
+  //   } catch (error) {
+  //     console.log("Error saving tokens:", error);
+  //   }
+  // };
+
+//------------------------------
+
+const storeTokens = async (accessToken, refreshToken) => {
+  try {
+    if (!accessToken || !refreshToken) {
+      throw new Error("Invalid tokens provided");
     }
-  };
+
+    await AsyncStorage.setItem("accessToken", accessToken);
+    await AsyncStorage.setItem("refreshToken", refreshToken);
+    console.log("Tokens successfully stored");
+  } catch (error) {
+    console.error("Error storing tokens:", error.message);
+  }
+};
+
+
+
+
+
+
+
+
+//-----------------------------------------
 
   const handleAuthError = (error) => {
     if (error.response) {

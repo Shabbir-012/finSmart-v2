@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
+import { router } from "expo-router";
 
 const API = axios.create({
   baseURL: "http://192.168.10.42:8001",
@@ -31,21 +32,27 @@ API.interceptors.response.use(
 
       try {
         const refreshToken = await AsyncStorage.getItem("refreshToken");
-        if (refreshToken) {
+        if (!refreshToken) throw new Error("Refresh token not available")
           const { data } = await axios.post(
             "http://192.168.10.42:8001/api/v1/users/refresh-token",
             { refreshToken }
           );
 
           await AsyncStorage.setItem("accessToken", data.accessToken);
-          await AsyncStorage.setItem("refreshToken", data.refreshToken);
+          // await AsyncStorage.setItem("refreshToken", data.refreshToken);
 
           originalRequest.headers[
             "Authorization"
           ] = `Bearer ${data.accessToken}`;
           return API(originalRequest);
-        }
+        
       } catch (error) {
+
+        console.log("Token refresh failed, logging out:", error.message);
+        // await AsyncStorage.multiRemove(["accessToken", "refreshToken"]);
+        router.push("/sign-in");
+
+
         // await AsyncStorage.clear();
         throw error;
       }
