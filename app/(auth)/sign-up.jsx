@@ -1,3 +1,6 @@
+//  app/(auth)/sign-up.jsx
+
+
 import React from "react";
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
 import { useForm, Controller } from "react-hook-form";

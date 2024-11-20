@@ -1,116 +1,94 @@
-import { View, Text } from "react-native";
+import { View, Text, Alert } from "react-native";
 import React, { useEffect, useState } from "react";
 import Logo from "../SvgIcon/Logo";
 import { TouchableOpacity } from "react-native";
 import { router } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import axios from "axios";
+
+import API from "../../app/api/axiosInstance";
 
 const TopBar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // Check login status when the component mounts
+ 
+
   useEffect(() => {
     const checkLoginStatus = async () => {
       const accessToken = await AsyncStorage.getItem("accessToken");
-      setIsLoggedIn(!!accessToken);
-    };
+      const refreshToken = await AsyncStorage.getItem("refreshToken");
 
+      console.log("Stored Tokens:", accessToken , refreshToken);
+
+      if (accessToken && refreshToken) {
+        setIsLoggedIn(true);
+      } else {
+        setIsLoggedIn(false);
+      }
+    };
     checkLoginStatus();
   }, []);
 
-  // Handle logout functionality
-  // const handleLogout = async () => {
-  //   try {
-  //     const accessToken = await AsyncStorage.getItem("accessToken");
+  const handleLogOut = async () => {
 
-  //     if (accessToken) {
-  //       // Make the logout API call
-  //       const response = await axios.post(
-  //         "http://192.168.10.42:8001/api/v1/users/logout",
-  //         {},
-  //         {
-  //           headers: {
-  //             Authorization: `Bearer ${accessToken}`,
-  //           },
-  //         }
-  //       );
-
-  //       if (response.status === 200) {
-  //         // Clear tokens from AsyncStorage
-  //         await AsyncStorage.removeItem("accessToken");
-  //         await AsyncStorage.removeItem("refreshToken");
-
-  //         // Update login status and redirect to login page
-  //         setIsLoggedIn(false);
-  //         router.push("/(auth)/sign-in");
-  //       } else {
-  //         // Handle any error response from the logout API
-  //         console.error("Logout failed", response.data);
-  //         alert("Logout failed. Please try again.");
-  //       }
-  //     }
-  //   } catch (error) {
-  //     console.error("Error during logout:", error);
-  //     alert("Error during logout. Please try again.");
-  //   }
-  // };
-
-  //------------------------------------------------
-  const handleLogout = async () => {
     try {
+      const refreshToken = await AsyncStorage.getItem("refreshToken");
       const accessToken = await AsyncStorage.getItem("accessToken");
-      console.log("Access Token:", accessToken);
 
-      if (accessToken) {
-        // Update login state immediately to show "Login" before API call
-        setIsLoggedIn(false);
-        console.log("Logging out...");
+      // Check if tokens exist
+      if (!refreshToken) throw new Error("Refresh token not found");
+      if (!accessToken) throw new Error("Access token not found");
 
-        // Make the logout API call
-        const response = await axios.post(
-          "http://192.168.10.42:8001/api/v1/users/logout",
-          {},
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
+      
 
-        console.log("Logout response:", response);
-
-        if (response.status === 200) {
-          // Clear tokens from AsyncStorage
-          await AsyncStorage.removeItem("accessToken");
-          await AsyncStorage.removeItem("refreshToken");
-
-          const clearedToken = await AsyncStorage.getItem("accessToken");
-console.log("Cleared Access Token:", clearedToken); // Should be null
-
-          checkLoginStatus();
-
-          // Redirect to the sign-in page
-          router.push("/(auth)/sign-in");
-        } else {
-          console.error("Logout failed", response.data);
-          alert("Logout failed. Please try again.");
-        }
+      if (!accessToken || !refreshToken) {
+        Alert.alert("Cannot log out: Missing tokens");
+        return;
       }
+
+      console.log("Sending logout request...");
+      console.log("refreshToken" , refreshToken);
+      
+      const data =  {
+        refreshToken : refreshToken 
+      }
+
+      const response = await API.post(
+        
+        "http://192.168.10.42:8001/api/v1/users/logout",
+        data, 
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            // "Content-Type": "application/json", // pass the accessToken in the Authorization header
+          },
+        }
+
+       
+
+      );
+      console.log("Logout response", response.data);
+
+      // await AsyncStorage.multiRemove(["accessToken", "refreshToken"]);
+
+      // Remove tokens from storage
+    await AsyncStorage.removeItem("accessToken");
+    await AsyncStorage.removeItem("refreshToken");
+
+
+      setIsLoggedIn(false);
+      router.push("/home");
+      Alert.alert("Logged out successfully");
     } catch (error) {
-      console.error("Error during logout:", error);
-      alert("Error during logout. Please try again.");
+      console.log("Error during logout", error.message);
+      Alert.alert("Failed to log out. Please try again.");
     }
   };
 
-  //...............................................
-
-  // Handle login redirection when the button is clicked
-  const handleLoginRedirect = () => {
-    if (!isLoggedIn) {
-      router.push("/(auth)/sign-in");
+  const handleButtonPress = () => {
+    if (isLoggedIn) {
+      handleLogOut();
     } else {
-      handleLogout(); // Trigger logout if already logged in
+      router.push("/sign-in");
     }
   };
 
@@ -130,7 +108,7 @@ console.log("Cleared Access Token:", clearedToken); // Should be null
         FinSmart
       </Text>
 
-      <TouchableOpacity onPress={handleLoginRedirect}>
+      <TouchableOpacity onPress={handleButtonPress}>
         <Text
           style={{
             marginLeft: 180,
