@@ -7,53 +7,31 @@ import { globalStyles } from "../styles/Styles";
 import CustomButton from "../../components/Button/CustomButton";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router, useRouter } from "expo-router";
-import API from "../api/axiosInstance";
+// import API from "../api/axiosInstance";
+import axios from 'axios'
+
 
 export default function SignIn() {
 
-  // const storeTokens = async (accessToken, refreshToken) => {
-  //   // console.log("Tokens being stored:", accessToken, refreshToken); // Log the tokens here
-  //   try {
-  //     if (accessToken && refreshToken) {
-  //       await AsyncStorage.setItem("accessToken", accessToken);
-  //       await AsyncStorage.setItem("refreshToken", refreshToken);
+  const storeTokens = async (accessToken, refreshToken) => {
+    // console.log("Tokens being stored:", accessToken, refreshToken); // Log the tokens here
+    try {
+      if (accessToken && refreshToken) {
+        await AsyncStorage.setItem("accessToken", accessToken);
+        await AsyncStorage.setItem("refreshToken", refreshToken);
 
-  //       console.log("Token Successfully stored");
+        console.log("Token Successfully stored");
         
-  //     } else {
-  //       console.error(
-  //         "Invalid tokens. Access token or refresh token is missing."
-  //       );
-  //     }
-  //   } catch (error) {
-  //     console.log("Error saving tokens:", error);
-  //   }
-  // };
-
-//------------------------------
-
-const storeTokens = async (accessToken, refreshToken) => {
-  try {
-    if (!accessToken || !refreshToken) {
-      throw new Error("Invalid tokens provided");
+      } else {
+        console.error(
+          "Invalid tokens. Access token or refresh token is missing."
+        );
+      }
+    } catch (error) {
+      console.log("Error saving tokens:", error);
     }
+  };
 
-    await AsyncStorage.setItem("accessToken", accessToken);
-    await AsyncStorage.setItem("refreshToken", refreshToken);
-    console.log("Tokens successfully stored");
-  } catch (error) {
-    console.error("Error storing tokens:", error.message);
-  }
-};
-
-
-
-
-
-
-
-
-//-----------------------------------------
 
   const handleAuthError = (error) => {
     if (error.response) {
@@ -71,7 +49,7 @@ const storeTokens = async (accessToken, refreshToken) => {
     // console.log(data);
     
     try {
-      const response = await API.post("/api/v1/users/login", data);
+      const response = await axios.post("http://192.168.10.42:8001/api/v1/users/login", data);
       
       // console.log("sign in response",response.data.data);
       

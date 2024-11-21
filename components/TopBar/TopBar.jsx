@@ -5,7 +5,7 @@ import { TouchableOpacity } from "react-native";
 import { router } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import API from "../../app/api/axiosInstance";
+// import API from "../../app/api/axiosInstance";
 import axios from "axios";
 
 const TopBar = () => {
@@ -48,19 +48,18 @@ const TopBar = () => {
 
       console.log("Sending logout request...");
       console.log("refreshToken" , refreshToken);
+      console.log("accessToken" , accessToken);
       
       const data =  {
         refreshToken : refreshToken 
       }
 
-      const response = await API.post(
-        
+      const response = await axios.post(
         "http://192.168.10.42:8001/api/v1/users/logout",
-        { refreshToken }, 
+        null, // No body
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
-            // "Content-Type": "application/json", // pass the accessToken in the Authorization header
           },
         }
       );
@@ -78,8 +77,6 @@ const TopBar = () => {
 
 
       console.log("Logout response", response.data);
-
-      // await AsyncStorage.multiRemove(["accessToken", "refreshToken"]);
 
       // Remove tokens from storage
     await AsyncStorage.removeItem("accessToken");
