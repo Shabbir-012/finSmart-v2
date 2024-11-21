@@ -5,7 +5,7 @@ import { TouchableOpacity } from "react-native";
 import { router } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-// import API from "../../app/api/axiosInstance";
+import API from "../../app/api/axiosInstance";
 import axios from "axios";
 
 const TopBar = () => {
@@ -54,7 +54,7 @@ const TopBar = () => {
         refreshToken : refreshToken 
       }
 
-      const response = await axios.post(
+      const response = await API.post(
         "http://192.168.10.42:8001/api/v1/users/logout",
         null, // No body
         {

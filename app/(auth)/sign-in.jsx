@@ -7,7 +7,7 @@ import { globalStyles } from "../styles/Styles";
 import CustomButton from "../../components/Button/CustomButton";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router, useRouter } from "expo-router";
-// import API from "../api/axiosInstance";
+import API from "../api/axiosInstance";
 import axios from 'axios'
 
 
@@ -49,7 +49,7 @@ export default function SignIn() {
     // console.log(data);
     
     try {
-      const response = await axios.post("http://192.168.10.42:8001/api/v1/users/login", data);
+      const response = await API.post("http://192.168.10.42:8001/api/v1/users/login", data);
       
       // console.log("sign in response",response.data.data);
       
