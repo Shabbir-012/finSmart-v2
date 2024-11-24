@@ -1,12 +1,12 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 
-const AirTicket = () => {
+const SubmitButton = () => {
   return (
     <View>
-      <Text>AirTicket</Text>
+      <Text>SubmitButton</Text>
     </View>
   )
 }
 
-export default AirTicket
+export default SubmitButton
