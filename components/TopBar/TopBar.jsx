@@ -17,7 +17,7 @@ const TopBar = () => {
       const accessToken = await AsyncStorage.getItem("accessToken");
       const refreshToken = await AsyncStorage.getItem("refreshToken");
 
-      console.log("Stored Tokens:", accessToken , refreshToken);
+      // console.log("Stored Tokens:", accessToken , refreshToken);
 
       if (accessToken && refreshToken) {
         setIsLoggedIn(true);
@@ -45,9 +45,9 @@ const TopBar = () => {
         return;
       }
 
-      console.log("Sending logout request...");
-      console.log("refreshToken" , refreshToken);
-      console.log("accessToken" , accessToken);
+      // console.log("Sending logout request...");
+      // console.log("refreshToken" , refreshToken);
+      // console.log("accessToken" , accessToken);
       
       const response = await API.post(
         "http://192.168.10.42:8001/api/v1/users/logout",

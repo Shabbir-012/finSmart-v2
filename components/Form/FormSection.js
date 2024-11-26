@@ -38,7 +38,7 @@ import { View, TextInput, StyleSheet } from 'react-native';
 
 const FormSection = ({ fields, formData = {}, setFormData }) => {
 
-console.log("Inside From selection. Receving form Data:", formData);
+// console.log("Inside From selection. Receving form Data:", formData);
 
   const handleInputChange = (key, value) => {
     // Update the form data without relying on non-serializable `prev`
