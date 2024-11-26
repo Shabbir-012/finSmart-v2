@@ -5,10 +5,10 @@ const store = configureStore({
   reducer: {
     form: formReducer,
   },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: false, // Disable serializable checks
-    }),
+  // middleware: (getDefaultMiddleware) =>
+  //   getDefaultMiddleware({
+  //     serializableCheck: false, // Disable serializable checks
+  //   }),
 });
 
 export default store;

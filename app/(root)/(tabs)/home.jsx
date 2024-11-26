@@ -39,7 +39,7 @@ const Home = () => {
         
         <ServiceCard IconComponent={CreditCard} title={"Credit Card"}  onPress={() => checkLoginAndNavigate("creditCard")}/>
         <ServiceCard IconComponent={EmiCalculator} title={"Emi Calculator"} onPress={() => router.push("/emiCalculator")} />
-        <ServiceCard IconComponent={ekycForm} title={"Ekyc Form"} onPress={() => router.push("/ekycForm")}/>
+        <ServiceCard IconComponent={EkycForm} title={"Ekyc Form"} onPress={() => router.push("/ekycForm")}/>
         <ServiceCard IconComponent={AirTicket} title={"Air Ticket"} onPress={() => router.push("/airTicket")}/>
 
 

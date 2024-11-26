@@ -21,7 +21,7 @@ const fieldsMap = {
   documents: [{ id: 'document', label: 'Upload Document' }],
 };
 
-const ekycForm = () => {
+const EkycForm = () => {
   const [activeTab, setActiveTab] = useState('personal');
   const formData = useSelector((state) => state.form); // Access Redux state
   const dispatch = useDispatch(); // Dispatch actions
@@ -76,4 +76,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ekycForm;
+export default EkycForm;
