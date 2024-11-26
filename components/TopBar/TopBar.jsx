@@ -29,6 +29,8 @@ const TopBar = () => {
   }, []);
 
   const handleLogOut = async () => {
+    //  await AsyncStorage.removeItem("accessToken");
+    // await AsyncStorage.removeItem("refreshToken");
 
     try {
       const refreshToken = await AsyncStorage.getItem("refreshToken");
