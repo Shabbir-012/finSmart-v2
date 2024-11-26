@@ -22,15 +22,17 @@ const fieldsMap = {
 };
 
 const EkycForm = () => {
-  const [activeTab, setActiveTab] = useState('personal');
+  const [activeTab, setActiveTab] = useState('personal'); //done
   const formData = useSelector((state) => state.form); // Access Redux state
   const dispatch = useDispatch(); // Dispatch actions
 
+  // done
   const handleNext = () => {
     const currentIndex = tabs.findIndex((tab) => tab.id === activeTab);
     if (currentIndex < tabs.length - 1) setActiveTab(tabs[currentIndex + 1].id);
   };
 
+  //done
   const handlePrevious = () => {
     const currentIndex = tabs.findIndex((tab) => tab.id === activeTab);
     if (currentIndex > 0) setActiveTab(tabs[currentIndex - 1].id);
