@@ -11,10 +11,11 @@ export default function RootLayout() {
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="index" />
       <Stack.Screen name="(auth)" />
-      <Provider store={store}>
       <Stack.Screen name="(root)" />
-      <Stack.Screen name="(pages)" />
-      </Provider>
+      
+      
+
+
     </Stack>
     
   );

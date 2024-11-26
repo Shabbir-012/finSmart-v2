@@ -11,6 +11,8 @@ const formSlice = createSlice({
   },
   reducers: {
     saveFormData: (state, action) => {
+      console.log("Inside formSlice:", state , action , action.payload.data);
+      
       state[action.payload.section] = action.payload.data;
     },
   },
