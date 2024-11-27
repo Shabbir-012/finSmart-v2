@@ -14,11 +14,25 @@ const tabs = [
 ];
 
 const fieldsMap = {
-  personal: [{ id: 'name', label: 'Name' }, { id: 'age', label: 'Age' }],
-  address: [{ id: 'street', label: 'Street' }, { id: 'city', label: 'City' }],
-  family: [{ id: 'spouse', label: 'Spouse' }],
-  nominee: [{ id: 'nomineeName', label: 'Nominee Name' }],
-  documents: [{ id: 'document', label: 'Upload Document' }],
+  personal: [
+    { id: 'title', label: 'Title', type: 'radio', options: ['Mr.', 'Ms.', 'Mrs.', 'Others'] },
+    { id: 'nid', label: 'NID Number', type: 'text', placeholder: 'Enter NID Number' },
+    { id: 'fullName', label: 'Full Name', type: 'text', placeholder: 'Enter Full Name' },
+    { id: 'dob', label: 'Date of Birth', type: 'text', placeholder: 'Enter Date of Birth' },
+    { id: 'gender', label: 'Gender', type: 'radio', options: ['Male', 'Female', 'Other'] },
+    { id: 'nationality', label: 'Nationality', type: 'radio', options: ['Bangladeshi', 'Non-Bangladeshi'] },
+  ],
+  address: [
+    { id: 'presentAddress', label: 'Present Address', type: 'section' },
+    { id: 'villageStreet', label: 'Village/Street No', type: 'text', placeholder: 'Enter Village/Street Name' },
+    { id: 'district', label: 'District', type: 'dropdown', options: ['Dhaka', 'Chattogram', 'Sylhet', 'Khulna'] },
+    { id: 'permanentAddress', label: 'Permanent Address', type: 'section' },
+    { id: 'villageNo', label: 'Village No', type: 'text', placeholder: 'Enter Village Name' },
+    { id: 'districtPerm', label: 'District', type: 'dropdown', options: ['Dhaka', 'Chattogram', 'Sylhet', 'Khulna'] },
+  ],
+  family: [{ id: 'spouse', label: 'Spouse',type: 'text' }],
+  nominee: [{ id: 'nomineeName', label: 'Nominee Name' ,type: 'text'}],
+  documents: [{ id: 'document', label: 'Upload Document' ,type: 'text'}],
 };
 
 const EkycForm = () => {
