@@ -34,7 +34,7 @@
 
 
 import React from 'react';
-import { View, TextInput, StyleSheet } from 'react-native';
+import { View,Text, TextInput, StyleSheet } from 'react-native';
 
 const FormSection = ({ fields, formData = {}, setFormData }) => {
 
@@ -49,6 +49,8 @@ const FormSection = ({ fields, formData = {}, setFormData }) => {
   return (
     <View style={styles.container}>
       {fields.map((field) => (
+        <View key={field.id}>
+        <Text>{field.label}</Text>
         <TextInput
           key={field.id}
           style={styles.input}
@@ -56,6 +58,7 @@ const FormSection = ({ fields, formData = {}, setFormData }) => {
           value={formData[field.id] || ''}
           onChangeText={(value) => handleInputChange(field.id, value)}
         />
+        </View>
       ))}
     </View>
   );
@@ -64,10 +67,21 @@ const FormSection = ({ fields, formData = {}, setFormData }) => {
 const styles = StyleSheet.create({
   container: {
     padding: 20,
+    alignItems: "center"
   },
   input: {
-    borderBottomWidth: 1,
-    marginBottom: 15,
+    // borderBottomWidth: 1,
+    // marginBottom: 15,
+    
+      borderRadius: 5,
+      borderWidth: 1,
+      borderColor: "rgba(0, 0, 0, 0.25)",
+      backgroundColor: "rgba(196, 196, 196, 0.00)",
+      padding: 10,
+      height: 40,
+      width:360,
+      marginTop:10,
+    
   },
 });
 
