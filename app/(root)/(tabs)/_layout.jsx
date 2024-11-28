@@ -1,24 +1,28 @@
 //  App/(root)/(tabs)/_layout.tsx
 
-
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Tabs } from "expo-router";
-
+import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 import Ionicons from "@expo/vector-icons/Ionicons";
 
 export default function Layout() {
   return (
+    <SafeAreaProvider>
     <Tabs
       screenOptions={{
         headerShown: false,
         tabBarStyle: {
-          height: 60,
-          paddingVertical: 5,
-          paddingBottom: 8,
+          height: verticalScale(60),
+          paddingVertical: moderateScale(5),
+          paddingBottom: moderateScale(8),
+          backgroundColor: "black",
+          
+
         },
         tabBarActiveTintColor: "#F6941D",
         tabBarLabelStyle: {
           fontSize: 12,
-          marginBottom: 5,
+          marginBottom: moderateScale(5),
         },
       }}
     >
@@ -59,5 +63,6 @@ export default function Layout() {
         }}
       />
     </Tabs>
+    </SafeAreaProvider>
   );
 }

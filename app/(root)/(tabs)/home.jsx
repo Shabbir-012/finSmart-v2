@@ -10,6 +10,7 @@ import EkycForm from "../../../components/SvgIcon/EkycForm";
 import EmiCalculator from "../../../components/SvgIcon/EmiCalculator";
 import ServiceCard from "../../../components/Cards/ServiceCard";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { StatusBar } from "expo-status-bar";
 
 
 const Home = () => {
@@ -28,6 +29,7 @@ const Home = () => {
 
   return (
     <SafeAreaView style={{ marginTop: 20 }}>
+      <StatusBar style="dark" />
       
       <TopBar />
 

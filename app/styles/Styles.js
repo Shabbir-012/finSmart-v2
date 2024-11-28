@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-export const globalStyles = StyleSheet.create({
+const globalStyles = StyleSheet.create({
   container: {
     padding: 20,
     backgroundColor: "#fff",
@@ -23,3 +23,5 @@ export const globalStyles = StyleSheet.create({
     marginTop: 5,
   },
 });
+
+export default globalStyles;

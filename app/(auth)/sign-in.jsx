@@ -3,7 +3,7 @@ import { View, Text, Image, Button, StyleSheet, TextInput } from "react-native";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Controller, useForm } from "react-hook-form";
-import { globalStyles } from "../styles/Styles";
+import  globalStyles  from "../styles/Styles";
 import CustomButton from "../../components/Button/CustomButton";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router, useRouter } from "expo-router";
