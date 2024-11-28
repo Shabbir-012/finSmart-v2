@@ -53,6 +53,12 @@ const fieldsMap = {
       type: "radio",
       options: ["Bangladeshi", "Non-Bangladeshi"],
     },
+    {
+      id: "profession",
+      label: "Applicant Profession",
+      type: "text",
+      placeholder: "Enter your Profession",
+    },
   ],
   address: [
     { id: "presentAddress", label: "Present Address", type: "section" },
@@ -82,8 +88,52 @@ const fieldsMap = {
       options: ["Dhaka", "Chattogram", "Sylhet", "Khulna"],
     },
   ],
-  family: [{ id: "spouse", label: "Spouse", type: "text" }],
-  nominee: [{ id: "nomineeName", label: "Nominee Name", type: "text" }],
+  family: [
+    {
+      id: "fatherName",
+      label: "Father's Name",
+      type: "text",
+      placeholder: "Enter Father's Name",
+    },
+    {
+      id: "motherName",
+      label: "Mother's Name",
+      type: "text",
+      placeholder: "Enter Mother's Name",
+    },
+    {
+      id: "maritalStatus",
+      label: "Marital Status",
+      type: "dropdown",
+      options: ["Single", "Married", "Other"],
+    },
+    {
+      id: "spouseName",
+      label: "Spouse Name",
+      type: "text",
+      placeholder: "Enter Spouse Name",
+    },
+  ],
+  nominee: [
+    {
+      id: "nomineeName",
+      label: "Nominee's Name",
+      type: "text",
+      placeholder: "Enter Nominee's Name",
+    },
+    {
+      id: "nomineedot",
+      label: "Date of Birth",
+      type: "text",
+      placeholder: "Enter Date of Birth",
+    },
+    {
+      id: "relationWithNominee",
+      label: "Relationship with Nominee",
+      type: "text",
+      placeholder: "Relationship",
+    },
+  ],
   documents: [{ id: "document", label: "Upload Document", type: "text" }],
 };
 
@@ -131,20 +181,21 @@ const EkycForm = () => {
           activeTab={activeTab}
           setActiveTab={(tab) => setActiveTab(tab)}
         />
-
-        <FormSection
-          fields={fieldsMap[activeTab]}
-          formData={formData[activeTab]}
-          setFormData={(data) =>
-            dispatch(saveFormData({ section: activeTab, data }))
-          }
-        />
-
+        {/* <ScrollView style={{ flex: 1 }}  contentContainerStyle={{ paddingBottom: 20 }}> */}
+          <FormSection
+            fields={fieldsMap[activeTab]}
+            formData={formData[activeTab]}
+            setFormData={(data) =>
+              dispatch(saveFormData({ section: activeTab, data }))
+            }
+          />
+        
         <View style={styles.buttonContainer}>
           <Button title="Previous" onPress={handlePrevious} />
           <Button title="Next" onPress={handleNext} />
           <Button title="Submit" onPress={handleSubmit} />
         </View>
+        {/* </ScrollView> */}
       </View>
     </SafeAreaProvider>
   );

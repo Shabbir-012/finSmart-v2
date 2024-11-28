@@ -1,6 +1,6 @@
 
 import React, { useState, useRef } from 'react';
-import { TouchableOpacity } from 'react-native';
+import { ScrollView, TouchableOpacity } from 'react-native';
 import { View, Text, TextInput, StyleSheet, TouchableWithoutFeedback, Keyboard, TextComponent } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 
@@ -24,6 +24,7 @@ const FormSection = ({ fields, formData = {}, setFormData }) => {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      {/* <ScrollView contentContainerStyle={styles.container}> */}
       <View style={styles.container}>
         {fields.map((field) => (
           <View key={field.id} style={styles.fieldContainer}>
@@ -87,6 +88,7 @@ const FormSection = ({ fields, formData = {}, setFormData }) => {
           </View>
         ))}
       </View>
+      {/* </ScrollView> */}
     </TouchableWithoutFeedback>
   );
 };
