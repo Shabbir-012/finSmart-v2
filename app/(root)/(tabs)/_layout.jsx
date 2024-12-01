@@ -15,7 +15,7 @@ export default function Layout() {
           height: verticalScale(60),
           paddingVertical: moderateScale(5),
           paddingBottom: moderateScale(8),
-          backgroundColor: "black",
+          backgroundColor: "#fff",
           
 
         },
