@@ -16,7 +16,6 @@ import { scale, verticalScale, moderateScale } from "react-native-size-matters";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import CustomButton from "../../components/Button/CustomButton";
 import fieldsMap from "../../components/Form/TabContent";
-import { router } from "expo-router";
 import PreviewTab from "../../components/Form/PreviewTab";
 
 const tabs = [

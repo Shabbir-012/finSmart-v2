@@ -124,31 +124,6 @@ const FormSection = ({ fields, formData = {}, setFormData }) => {
                 tickIconStyle={styles.tickIcon}
               />
             )}
-
-            {/* {field.type === "upload" && (
-            <View style={styles.uploadContainer}>
-              <TouchableOpacity
-                style={styles.uploadButton}
-                onPress={() => handleUpload(field.id)}
-              >
-                <Text style={styles.uploadButtonText}>Upload</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.uploadButton}
-                onPress={() => handleTakePicture(field.id)}
-              >
-                <Text style={styles.uploadButtonText}>Take Picture</Text>
-              </TouchableOpacity>
-              {formData[field.id] && (
-                <Image
-                source={{ uri: formData[field.id] }}
-                style={styles.previewImage}
-                resizeMode="contain"
-              />
-              )}
-            </View>
-          )} */}
-
             {field.type === "upload" && (
               <View style={styles.uploadContainer}>
                 {/* Show buttons or preview image based on whether an image exists */}
@@ -249,9 +224,10 @@ const styles = StyleSheet.create({
   uploadContainer: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "center"
   },
   uploadButton: {
-    backgroundColor: "#007BFF",
+    backgroundColor: "#EF473A",
     padding: 10,
     borderRadius: 5,
     marginRight: 10,
@@ -262,6 +238,7 @@ const styles = StyleSheet.create({
   previewText: {
     marginTop: 10,
     color: "green",
+
   },
 
   previewImage: {
@@ -271,6 +248,20 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 1,
     borderColor: "#ccc",
+  },
+  deleteButton: {
+    backgroundColor: "#FF4D4D",
+    padding: 10,
+    borderRadius: 5,
+    marginVertical: 10,
+    width: "80%",
+    alignItems: "center",
+    width: 90,
+    marginLeft: 20,
+  },
+  deleteButtonText: {
+    color: "#FFF",
+    fontWeight: "bold",
   },
 });
 
