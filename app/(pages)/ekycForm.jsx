@@ -15,7 +15,7 @@ import FormSection from "../../components/Form/FormSection";
 import { scale, verticalScale, moderateScale } from "react-native-size-matters";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import CustomButton from "../../components/Button/CustomButton";
-
+import fieldsMap from "../../components/Form/TabContent";
 const tabs = [
   { id: "personal", label: "Personal" },
   { id: "address", label: "Address" },
@@ -24,127 +24,7 @@ const tabs = [
   { id: "documents", label: "Documents" },
 ];
 
-const fieldsMap = {
-  personal: [
-    {
-      id: "title",
-      label: "Title",
-      type: "radio",
-      options: ["Mr.", "Ms.", "Mrs.", "Others"],
-    },
-    {
-      id: "nid",
-      label: "NID Number",
-      type: "text",
-      placeholder: "Enter NID Number",
-    },
-    {
-      id: "fullName",
-      label: "Full Name",
-      type: "text",
-      placeholder: "Enter Full Name",
-    },
-    {
-      id: "dob",
-      label: "Date of Birth",
-      type: "text",
-      placeholder: "Enter Date of Birth",
-    },
-    {
-      id: "gender",
-      label: "Gender",
-      type: "radio",
-      options: ["Male", "Female", "Other"],
-    },
-    {
-      id: "nationality",
-      label: "Nationality",
-      type: "radio",
-      options: ["Bangladeshi", "Non-Bangladeshi"],
-    },
-    {
-      id: "profession",
-      label: "Applicant Profession",
-      type: "text",
-      placeholder: "Enter your Profession",
-    },
-  ],
-  address: [
-    { id: "presentAddress", label: "Present Address", type: "section" },
-    {
-      id: "villageStreet",
-      label: "Village/Street No",
-      type: "text",
-      placeholder: "Enter Village/Street Name",
-    },
-    {
-      id: "district",
-      label: "District",
-      type: "dropdown",
-      options: ["Dhaka", "Chattogram", "Sylhet", "Khulna"],
-    },
-    { id: "permanentAddress", label: "Permanent Address", type: "section" },
-    {
-      id: "villageNo",
-      label: "Village No",
-      type: "text",
-      placeholder: "Enter Village Name",
-    },
-    {
-      id: "districtPerm",
-      label: "District",
-      type: "dropdown",
-      options: ["Dhaka", "Chattogram", "Sylhet", "Khulna"],
-    },
-  ],
-  family: [
-    {
-      id: "fatherName",
-      label: "Father's Name",
-      type: "text",
-      placeholder: "Enter Father's Name",
-    },
-    {
-      id: "motherName",
-      label: "Mother's Name",
-      type: "text",
-      placeholder: "Enter Mother's Name",
-    },
-    {
-      id: "maritalStatus",
-      label: "Marital Status",
-      type: "dropdown",
-      options: ["Single", "Married", "Other"],
-    },
-    {
-      id: "spouseName",
-      label: "Spouse Name",
-      type: "text",
-      placeholder: "Enter Spouse Name",
-    },
-  ],
-  nominee: [
-    {
-      id: "nomineeName",
-      label: "Nominee's Name",
-      type: "text",
-      placeholder: "Enter Nominee's Name",
-    },
-    {
-      id: "nomineedot",
-      label: "Date of Birth",
-      type: "text",
-      placeholder: "Enter Date of Birth",
-    },
-    {
-      id: "relationWithNominee",
-      label: "Relationship with Nominee",
-      type: "text",
-      placeholder: "Relationship",
-    },
-  ],
-  documents: [{ id: "document", label: "Upload Document", type: "text" }],
-};
+
 
 const EkycForm = () => {
   const [activeTab, setActiveTab] = useState("personal"); //done
