@@ -95,10 +95,10 @@ const FormSection = ({ fields, formData = {}, setFormData }) => {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
+    padding: 10,
   },
   fieldContainer: {
-    marginBottom: 20,
+    marginBottom: 15,
   },
   label: {
     fontSize: 16,
