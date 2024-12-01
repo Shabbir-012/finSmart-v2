@@ -1,8 +1,16 @@
-
-import React, { useState, useRef } from 'react';
-import { ScrollView, TouchableOpacity } from 'react-native';
-import { View, Text, TextInput, StyleSheet, TouchableWithoutFeedback, Keyboard, TextComponent } from 'react-native';
-import DropDownPicker from 'react-native-dropdown-picker';
+import React, { useState, useRef } from "react";
+import { Image, ScrollView, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  Keyboard,
+  TextComponent,
+} from "react-native";
+import DropDownPicker from "react-native-dropdown-picker";
+import * as ImagePicker from "expo-image-picker";
 
 const FormSection = ({ fields, formData = {}, setFormData }) => {
   const [dropdownState, setDropdownState] = useState({}); // Manage dropdown open and value
@@ -22,6 +30,36 @@ const FormSection = ({ fields, formData = {}, setFormData }) => {
     }
   };
 
+  const handleUpload = async (fieldId) => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      quality: 1,
+    });
+    if (!result.canceled) {
+      handleInputChange(fieldId, result.assets[0].uri); // Save the selected image URI
+    }
+  };
+
+  const handleTakePicture = async (fieldId) => {
+    const { status } = await ImagePicker.requestCameraPermissionsAsync();
+    if (status !== "granted") {
+      alert("Camera permission is required to take pictures!");
+      return;
+    }
+    const result = await ImagePicker.launchCameraAsync({
+      allowsEditing: true,
+      quality: 1,
+    });
+    if (!result.canceled) {
+      handleInputChange(fieldId, result.assets[0].uri); // Save the captured image URI
+    }
+  };
+
+  const handleDelete = (fieldId) => {
+    handleInputChange(fieldId, null); // Clear the image URI
+  };
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       {/* <ScrollView contentContainerStyle={styles.container}> */}
@@ -29,15 +67,15 @@ const FormSection = ({ fields, formData = {}, setFormData }) => {
         {fields.map((field) => (
           <View key={field.id} style={styles.fieldContainer}>
             <Text style={styles.label}>{field.label}</Text>
-            {field.type === 'text' && (
+            {field.type === "text" && (
               <TextInput
                 style={styles.input}
                 placeholder={field.placeholder}
-                value={formData[field.id] || ''}
+                value={formData[field.id] || ""}
                 onChangeText={(value) => handleInputChange(field.id, value)}
               />
             )}
-            {field.type === 'radio' && (
+            {field.type === "radio" && (
               <View style={styles.radioGroup}>
                 {field.options.map((option) => (
                   <TouchableOpacity
@@ -48,7 +86,8 @@ const FormSection = ({ fields, formData = {}, setFormData }) => {
                     <Text
                       style={[
                         styles.radioText,
-                        formData[field.id] === option && styles.selectedRadioText,
+                        formData[field.id] === option &&
+                          styles.selectedRadioText,
                       ]}
                     >
                       {option}
@@ -57,7 +96,7 @@ const FormSection = ({ fields, formData = {}, setFormData }) => {
                 ))}
               </View>
             )}
-            {field.type === 'dropdown' && (
+            {field.type === "dropdown" && (
               <DropDownPicker
                 open={dropdownState[field.id]?.open || false}
                 value={dropdownState[field.id]?.value || null}
@@ -79,11 +118,71 @@ const FormSection = ({ fields, formData = {}, setFormData }) => {
                 style={styles.dropdown}
                 dropDownContainerStyle={styles.dropdownContainer}
                 placeholder="Select an option"
-                listItemLabelStyle={{ color: '#000' }} // Label text color
+                listItemLabelStyle={{ color: "#000" }} // Label text color
                 selectedItemContainerStyle={styles.selectedItemContainer}
                 selectedItemLabelStyle={styles.selectedItemLabel}
                 tickIconStyle={styles.tickIcon}
               />
+            )}
+
+            {/* {field.type === "upload" && (
+            <View style={styles.uploadContainer}>
+              <TouchableOpacity
+                style={styles.uploadButton}
+                onPress={() => handleUpload(field.id)}
+              >
+                <Text style={styles.uploadButtonText}>Upload</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.uploadButton}
+                onPress={() => handleTakePicture(field.id)}
+              >
+                <Text style={styles.uploadButtonText}>Take Picture</Text>
+              </TouchableOpacity>
+              {formData[field.id] && (
+                <Image
+                source={{ uri: formData[field.id] }}
+                style={styles.previewImage}
+                resizeMode="contain"
+              />
+              )}
+            </View>
+          )} */}
+
+            {field.type === "upload" && (
+              <View style={styles.uploadContainer}>
+                {/* Show buttons or preview image based on whether an image exists */}
+                {formData[field.id] ? (
+                  <>
+                    <Image
+                      source={{ uri: formData[field.id] }}
+                      style={styles.previewImage}
+                      resizeMode="contain"
+                    />
+                    <TouchableOpacity
+                      style={styles.deleteButton}
+                      onPress={() => handleDelete(field.id)}
+                    >
+                      <Text style={styles.deleteButtonText}>Delete</Text>
+                    </TouchableOpacity>
+                  </>
+                ) : (
+                  <>
+                    <TouchableOpacity
+                      style={styles.uploadButton}
+                      onPress={() => handleUpload(field.id)}
+                    >
+                      <Text style={styles.uploadButtonText}>Upload</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={styles.uploadButton}
+                      onPress={() => handleTakePicture(field.id)}
+                    >
+                      <Text style={styles.uploadButtonText}>Take Picture</Text>
+                    </TouchableOpacity>
+                  </>
+                )}
+              </View>
             )}
           </View>
         ))}
@@ -95,24 +194,24 @@ const FormSection = ({ fields, formData = {}, setFormData }) => {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 10,
+    paddingTop: 10,
   },
   fieldContainer: {
     marginBottom: 15,
   },
   label: {
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 5,
   },
   input: {
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: "#ccc",
     borderRadius: 5,
     padding: 10,
   },
   radioGroup: {
-    flexDirection: 'row',
+    flexDirection: "row",
     marginTop: 10,
   },
   radioOption: {
@@ -121,30 +220,57 @@ const styles = StyleSheet.create({
   radioText: {
     padding: 5,
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: "#ccc",
     borderRadius: 5,
-    textAlign: 'center',
+    textAlign: "center",
   },
   selectedRadioText: {
-    backgroundColor: '#007BFF',
-    color: 'white',
+    backgroundColor: "#007BFF",
+    color: "white",
   },
   dropdown: {
-    borderColor: '#ccc',
+    borderColor: "#ccc",
     borderRadius: 5,
     padding: 10,
   },
   dropdownContainer: {
-    borderColor: '#ccc',
+    borderColor: "#ccc",
   },
   selectedItemContainer: {
-    backgroundColor: '#e6f7ff',
+    backgroundColor: "#e6f7ff",
   },
   selectedItemLabel: {
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   tickIcon: {
-    tintColor: '#007BFF',
+    tintColor: "#007BFF",
+  },
+
+  uploadContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  uploadButton: {
+    backgroundColor: "#007BFF",
+    padding: 10,
+    borderRadius: 5,
+    marginRight: 10,
+  },
+  uploadButtonText: {
+    color: "#FFF",
+  },
+  previewText: {
+    marginTop: 10,
+    color: "green",
+  },
+
+  previewImage: {
+    marginTop: 10,
+    width: 200,
+    height: 200,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#ccc",
   },
 });
 

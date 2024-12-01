@@ -118,7 +118,34 @@ const fieldsMap = {
           placeholder: "Relationship",
         },
       ],
-      documents: [{ id: "document", label: "Upload Document", type: "text" }],
+      documents: [
+        {
+          id: "applicantPicture",
+          label: "Upload/Take Applicant Picture",
+          type: "upload",
+        },
+        {
+          id: "nidFront",
+          label: "Upload/Take NID Front Picture",
+          type: "upload",
+        },
+        {
+          id: "nidBack",
+          label: "Upload/Take NID Back Picture",
+          type: "upload",
+        },
+        {
+          id: "signature",
+          label: "Upload/Take Signature",
+          type: "upload",
+        },
+      ],
+      
+      
 };
 
 export default fieldsMap;
+
+
+
+//  PreviewFormInfo

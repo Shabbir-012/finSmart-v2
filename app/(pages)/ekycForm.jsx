@@ -16,15 +16,17 @@ import { scale, verticalScale, moderateScale } from "react-native-size-matters";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import CustomButton from "../../components/Button/CustomButton";
 import fieldsMap from "../../components/Form/TabContent";
+import { router } from "expo-router";
+import PreviewTab from "../../components/Form/PreviewTab";
+
 const tabs = [
   { id: "personal", label: "Personal" },
   { id: "address", label: "Address" },
   { id: "family", label: "Family" },
   { id: "nominee", label: "Nominee" },
   { id: "documents", label: "Documents" },
+  { id: "preview", label: "Preview" },
 ];
-
-
 
 const EkycForm = () => {
   const [activeTab, setActiveTab] = useState("personal"); //done
@@ -78,20 +80,17 @@ const EkycForm = () => {
             contentContainerStyle={styles.scrollContent}
             keyboardShouldPersistTaps="handled"
           >
-            <FormSection
-              fields={fieldsMap[activeTab]}
-              formData={formData[activeTab]}
-              setFormData={(data) =>
-                dispatch(saveFormData({ section: activeTab, data }))
-              }
-            />
-
-            {/* <View style={styles.buttonContainer}>
-            <Button title="Previous" onPress={handlePrevious} />
-            <Button title="Next" onPress={handleNext} />
-            <Button title="Submit" onPress={handleSubmit} />
-          </View> */}
-            {/* </ScrollView> */}
+            {activeTab === "preview" ? (
+              <PreviewTab formData={formData} />
+            ) : (
+              <FormSection
+                fields={fieldsMap[activeTab]}
+                formData={formData[activeTab]}
+                setFormData={(data) =>
+                  dispatch(saveFormData({ section: activeTab, data }))
+                }
+              />
+            )}
 
             <View style={styles.footer}>
               <CustomButton
@@ -102,8 +101,8 @@ const EkycForm = () => {
               />
               {activeTab === tabs[tabs.length - 1].id ? (
                 <CustomButton
-                  title="Preview"
-                  onPress={handleNext}
+                  title="Submit"
+                  onPress={handleSubmit}
                   style={styles.button}
                   textStyle={styles.textStyle}
                 />

@@ -10,6 +10,7 @@ const Layout = () => {
       <Stack.Screen name="airTicket" />
       <Stack.Screen name="ekycForm" />
       <Stack.Screen name="emiCalculator" />
+      
     </Stack>
     </Provider>
   );
