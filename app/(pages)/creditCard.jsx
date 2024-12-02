@@ -11,24 +11,28 @@ const creditCard = () => {
         <Text style={{ textAlign: "center" }}>header</Text>
       </View>
       <View
-        style={{ flex: 6, backgroundColor: "yellow", justifyContent: "center" }}
+        style={{ flex: 6, backgroundColor: "yellow", alignItems: "center" }}
       >
-        <Text style={{ textAlign: "center" }}>Content</Text>
+        {/* <Text style={{ textAlign: "center" }}>Content</Text> */}
+        <View style={{ flex: 0.4, backgroundColor: "#4B79A1", width: "80%",marginTop: 70 }}>
+          <Text>Credit Card</Text>
+        </View>
+        
       </View>
       <View
         style={{
           flex: 1,
           backgroundColor: "green",
-          justifyContent: "center",
+          // justifyContent: "center",
           flexDirection: "row",
-          alignItems: "center"
+          // alignItems: "center"
         }}
       >
         {/* <Text style={{ textAlign: "center" }}>Footer</Text> */}
-        <View style={{ flex: 1 , backgroundColor: "blue"}}>
+        <View style={{ flex: 1, backgroundColor: "blue" }}>
           <Text>Button 1</Text>
         </View>
-        <View style={{ flex: 1 , backgroundColor: "lightBlue"}}>
+        <View style={{ flex: 1, backgroundColor: "#4B79A1" }}>
           <Text>Button 2</Text>
         </View>
       </View>
