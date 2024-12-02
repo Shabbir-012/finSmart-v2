@@ -78,6 +78,7 @@ const EkycForm = () => {
           <ScrollView
             contentContainerStyle={styles.scrollContent}
             keyboardShouldPersistTaps="handled"
+            nestedScrollEnabled={true} // Allow nested scrolling
           >
             {activeTab === "preview" ? (
               <PreviewTab formData={formData} />

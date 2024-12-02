@@ -11,6 +11,10 @@ import {
 } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import * as ImagePicker from "expo-image-picker";
+import RNPickerSelect from "react-native-picker-select";
+import UploadPicture from "../SvgIcon/UploadPicture";
+import TakePicture from "../SvgIcon/TakePicture";
+import DeleteIcon from "../SvgIcon/DeleteIcon";
 
 const FormSection = ({ fields, formData = {}, setFormData }) => {
   const [dropdownState, setDropdownState] = useState({}); // Manage dropdown open and value
@@ -97,32 +101,24 @@ const FormSection = ({ fields, formData = {}, setFormData }) => {
               </View>
             )}
             {field.type === "dropdown" && (
-              <DropDownPicker
-                open={dropdownState[field.id]?.open || false}
-                value={dropdownState[field.id]?.value || null}
+              
+              <View style={styles.pickerContainer}>
+              <RNPickerSelect
+                onValueChange={(value) => handleInputChange(field.id, value)}
                 items={field.options.map((option) => ({
                   label: option,
                   value: option,
                 }))}
-                setOpen={(open) => {
-                  setDropdownState((prev) => ({
-                    ...prev,
-                    [field.id]: { ...prev[field.id], open },
-                  }));
+                style={{
+                  inputIOS: [styles.dropdown, styles.border], // Combine base and border styles
+                  inputAndroid: [styles.dropdown, styles.border], // Combine for Android
                 }}
-                setValue={(callback) => {
-                  const value = callback();
-                  handleDropdownState(field.id, false, value); // Update value and close dropdown
+                placeholder={{
+                  label: "Select an option",
+                  value: null,
                 }}
-                setItems={() => {}} // Items are static, no need to manage them
-                style={styles.dropdown}
-                dropDownContainerStyle={styles.dropdownContainer}
-                placeholder="Select an option"
-                listItemLabelStyle={{ color: "#000" }} // Label text color
-                selectedItemContainerStyle={styles.selectedItemContainer}
-                selectedItemLabelStyle={styles.selectedItemLabel}
-                tickIconStyle={styles.tickIcon}
               />
+              </View>
             )}
             {field.type === "upload" && (
               <View style={styles.uploadContainer}>
@@ -138,7 +134,8 @@ const FormSection = ({ fields, formData = {}, setFormData }) => {
                       style={styles.deleteButton}
                       onPress={() => handleDelete(field.id)}
                     >
-                      <Text style={styles.deleteButtonText}>Delete</Text>
+                      {/* <Text style={styles.deleteButtonText}>Delete</Text> */}
+                      <DeleteIcon/>
                     </TouchableOpacity>
                   </>
                 ) : (
@@ -147,13 +144,15 @@ const FormSection = ({ fields, formData = {}, setFormData }) => {
                       style={styles.uploadButton}
                       onPress={() => handleUpload(field.id)}
                     >
-                      <Text style={styles.uploadButtonText}>Upload</Text>
+                      {/* <Text style={styles.uploadButtonText}>Upload</Text> */}
+                      <UploadPicture/>
                     </TouchableOpacity>
                     <TouchableOpacity
                       style={styles.uploadButton}
                       onPress={() => handleTakePicture(field.id)}
                     >
-                      <Text style={styles.uploadButtonText}>Take Picture</Text>
+                      {/* <Text style={styles.uploadButtonText}>Take Picture</Text> */}
+                      <TakePicture/>
                     </TouchableOpacity>
                   </>
                 )}
@@ -203,11 +202,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#007BFF",
     color: "white",
   },
-  dropdown: {
-    borderColor: "#ccc",
-    borderRadius: 5,
-    padding: 10,
-  },
+  // dropdown: {
+  //   borderColor: "#ccc",
+  //   borderRadius: 5,
+  //   padding: 10,
+  // },
   dropdownContainer: {
     borderColor: "#ccc",
   },
@@ -222,12 +221,17 @@ const styles = StyleSheet.create({
   },
 
   uploadContainer: {
+    borderWidth:2,
+    borderStyle:"dashed",
+    height: 200,
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    borderRadius: 20,
+    overflow: "hidden", // Ensure the content stays within the container
   },
   uploadButton: {
-    backgroundColor: "#EF473A",
+    // backgroundColor: "#EF473A",
     padding: 10,
     borderRadius: 5,
     marginRight: 10,
@@ -238,19 +242,22 @@ const styles = StyleSheet.create({
   previewText: {
     marginTop: 10,
     color: "green",
-
   },
 
   previewImage: {
-    marginTop: 10,
+    // marginTop: 10,
     width: 200,
-    height: 200,
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: "#ccc",
+    // height: 200,
+    // borderRadius: 10,
+    // borderWidth: 1,
+    // borderColor: "#ccc",
+    // width: "100%", // Full width of the container
+    height: "100%", // Full height of the container
+    borderRadius: 20, // Match the container's borderRadius
+    resizeMode: "cover", // Ensure the image covers the container
   },
   deleteButton: {
-    backgroundColor: "#FF4D4D",
+    // backgroundColor: "#FF4D4D",
     padding: 10,
     borderRadius: 5,
     marginVertical: 10,
@@ -262,6 +269,27 @@ const styles = StyleSheet.create({
   deleteButtonText: {
     color: "#FFF",
     fontWeight: "bold",
+  },
+  dropdown: {
+    fontSize: 16,
+    padding: 5,
+    borderRadius: 8,
+    // backgroundColor: "#fff", // Optional background color
+    color: "black", // Text color
+    textAlignVertical: "center",
+  },
+  border: {
+    borderWidth: 10, // Border thickness
+    borderColor: "black", // Border color
+    marginVertical: 10, // Spacing around the dropdown
+  },
+  pickerContainer: {
+    borderWidth: 1,
+  borderColor: "#ccc",
+  borderRadius: 5,
+  height: 40,
+  justifyContent: "center", // Center the content vertically
+  paddingHorizontal: 10, // Provide horizontal padding for the text
   },
 });
 
