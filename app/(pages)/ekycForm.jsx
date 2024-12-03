@@ -7,6 +7,7 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Platform,
+  TouchableOpacity,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { saveFormData } from "../../store/formSlice";
@@ -17,6 +18,8 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import CustomButton from "../../components/Button/CustomButton";
 import fieldsMap from "../../components/Form/TabContent";
 import PreviewTab from "../../components/Form/PreviewTab";
+import LeftArrow from "../../components/SvgIcon/LeftArrow";
+import { router } from "expo-router";
 
 const tabs = [
   { id: "personal", label: "Personal" },
@@ -57,13 +60,20 @@ const EkycForm = () => {
       >
         <View
           style={{
-            justifyContent: "center",
+            // justifyContent: "center",
             alignItems: "center",
             backgroundColor: "#73E49A",
             height: 80,
+            flexDirection: "row",
+            paddingTop: 25,
+            gap: 125,
+            paddingLeft: 20,
           }}
         >
-          <Text style={{ textAlign: "center", paddingTop: 25 }}>
+          <TouchableOpacity onPress={() => router.back()}>
+            <LeftArrow />
+          </TouchableOpacity>
+          <Text style={{ textAlign: "center", fontWeight: "500" }}>
             E-kyc Form
           </Text>
         </View>

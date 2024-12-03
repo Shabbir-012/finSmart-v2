@@ -284,7 +284,7 @@ const styles = StyleSheet.create({
     marginVertical: 10, // Spacing around the dropdown
   },
   pickerContainer: {
-    borderWidth: 1,
+  borderWidth: 1,
   borderColor: "#ccc",
   borderRadius: 5,
   height: 40,
