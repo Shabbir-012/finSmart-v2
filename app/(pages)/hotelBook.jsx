@@ -6,10 +6,14 @@ import {
   Platform,
   ScrollView,
   StyleSheet,
+  Pressable,
+  TextInput,
 } from "react-native";
 import React from "react";
 import InputField from "../../components/Input/InputField";
 import SearchIcon from "../../components/SvgIcon/SearchIcon";
+import CalenderIcon from "../../components/SvgIcon/CalenderIcon";
+import DatePicker from "react-native-date-ranges";
 
 const HotelBook = () => {
   return (
@@ -63,17 +67,76 @@ const HotelBook = () => {
           keyboardShouldPersistTaps="handled"
           nestedScrollEnabled={true} // Allow nested scrolling
         >
-           
-          <InputField
-            label="Distination"
-            placeholder="Enter your destination"
-            inputStyle={styles.input}
-            labelStyle = {styles.labelStyle}
-            container={styles.container}
-          />
+          <View>
+            {/* <InputField
+              label="Distination"
+              placeholder="Enter your destination"
+              // inputStyle={styles.input}
+              labelStyle={styles.labelStyle}
+              container={styles.container}
+              IconComponent={SearchIcon}
+            //   onChangeText={setSearch}
+            />
+            <InputField
+              label="Select Date"
+              placeholder="Pick Date"
+              // inputStyle={styles.input}
+              labelStyle={styles.labelStyle}
+              container={styles.container}
+              IconComponent={CalenderIcon}
+            //   onChangeText={setSearch}
+            />
+            <InputField
+              label="Select Date"
+              placeholder="Pick Date"
+              // inputStyle={styles.input}
+              labelStyle={styles.labelStyle}
+              container={styles.container}
+              IconComponent={CalenderIcon}
+            //   onChangeText={setSearch}
+            /> */}
+
+            <Pressable
+              onPress={() => navigation.navigate("Search")}
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                gap: 10,
+                paddingHorizontal: 10,
+                borderColor: "#FFC72C",
+                borderWidth: 2,
+                paddingVertical: 15,
+              }}
+            >
+              <SearchIcon />
+              <TextInput
+                placeholderTextColor="black"
+                placeholder="Enter Your Destination"
+              />
+            </Pressable>
+
+
+            <Pressable
+              onPress={() => navigation.navigate("Search")}
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                gap: 10,
+                paddingHorizontal: 10,
+                borderColor: "#FFC72C",
+                borderWidth: 2,
+                paddingVertical: 15,
+              }}
+            >
+              <SearchIcon />
+              <TextInput
+                placeholderTextColor="black"
+                placeholder="Enter Your Destination"
+              />
+            </Pressable>
+          </View>
         </ScrollView>
       </View>
-      <View style={{ flex: 1, backgroundColor: "#EAECC6" }}></View>
     </>
   );
 };
@@ -88,19 +151,19 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "rgba(0, 0, 0, 0.25)",
     backgroundColor: "rgba(196, 196, 196, 0.00)",
-   
+
     // marginTop: 10,
     width: 300,
-    height: 50,
+    height: 80,
   },
-  labelStyle:{
+  labelStyle: {
     fontWeight: "bold",
+    paddingBottom: 10,
   },
-  container:{
+  container: {
     paddingTop: 10,
-    paddingLeft: 30
-  }
- 
+    // paddingLeft: 30,
+  },
 });
 
 export default HotelBook;
